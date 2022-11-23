@@ -7,7 +7,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["AspNetCoreSocketServer.BlazorServer/AspNetCoreSocketServer.BlazorServer.csproj", "AspNetCoreSocketServer.BlazorServer/"]
-COPY ["AspNetCoreSocketServer.SocketServer/AspNetCoreSocketServer.SocketService.csproj", "AspNetCoreSocketServer.SocketService/"]
+COPY ["AspNetCoreSocketServer.SocketService/AspNetCoreSocketServer.SocketService.csproj", "AspNetCoreSocketServer.SocketService/"]
 RUN dotnet restore "AspNetCoreSocketServer.BlazorServer/AspNetCoreSocketServer.BlazorServer.csproj"
 COPY . .
 WORKDIR "/src/AspNetCoreSocketServer.BlazorServer"
