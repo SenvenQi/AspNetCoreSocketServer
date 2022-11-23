@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Docker Image Build And Push DockerHub
 
 on:
   push:
@@ -15,4 +15,17 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file **/Dockerfile --tag SevenQi/SocketTestServer:latest
+      run: docker build . --file **/Dockerfile --tag sevenqi/socket-server:latest
+      
+    - name: Docker Login
+      uses: docker/login-action@v2.1.0
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+        
+    - name: push Docker images
+      uses: docker/build-push-action@v3.2.0
+      with:
+        push: true
+        tags: sevenqi/socket-server:latestt
+        
