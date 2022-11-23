@@ -27,5 +27,5 @@ jobs:
       uses: docker/build-push-action@v3.2.0
       with:
         push: true
-        tags: sevenqi/socket-server:latestt
+        tags: sevenqi/socket-server:latest
         
