@@ -1,0 +1,25 @@
+﻿@using AspNetCoreSocketServer.SocketService
+@inject ISessionManager SessionManager
+@foreach (var item in Data)
+{
+    <div>@item.Address.ToString()</div>
+}
+
+@code {
+    [Parameter]
+    public List<SessionData> Data { get; set; }
+    [Parameter]
+    public EventCallback<List<SessionData>> DataChanged { get; set; }
+
+    protected override void OnInitialized()
+    {
+        SessionManager.OnChange += Update;
+        base.OnInitialized();
+    }
+
+    private async void Update()
+    {
+        await DataChanged.InvokeAsync(SessionManager.Sessions);
+    }
+
+}

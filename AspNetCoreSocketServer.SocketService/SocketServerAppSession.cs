@@ -29,7 +29,7 @@ public class SocketServerAppSession:AppSession
 public interface ISessionManager
 {
     Action OnChange { get; set; }
-    IList<SessionData> Sessions { get; }
+    List<SessionData> Sessions { get; set; }
     void Add(EndPoint remoteEndPoint);
     void Remove(EndPoint remoteEndPoint);
 }
@@ -37,7 +37,7 @@ public interface ISessionManager
 public class SessionManager : ISessionManager
 {
     public Action OnChange { get; set; }
-    public IList<SessionData> Sessions { get; } = new List<SessionData>(); 
+    public List<SessionData> Sessions { get; set; } = new List<SessionData>(); 
     public void Add(EndPoint remoteEndPoint)
     {
         Sessions.Add(new SessionData()

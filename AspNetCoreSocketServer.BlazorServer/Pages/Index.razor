@@ -4,18 +4,8 @@
 
 <PageTitle>SocketServer</PageTitle>
 
-@{
-    foreach (var item in SessionManager.Sessions)
-    {
-        <div>@item.Address</div> 
-    }
-}
+<ListClient @bind-Data="SessionManager.Sessions"></ListClient>
 
 @code
 {
-    protected override void OnInitialized()
-    {
-        SessionManager.OnChange += StateHasChanged;
-        base.OnInitialized();
-    }
 }
