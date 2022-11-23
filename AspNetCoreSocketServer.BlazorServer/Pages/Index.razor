@@ -1,9 +1,12 @@
 ﻿@page "/"
+@using AspNetCoreSocketServer.SocketService
+@inject ISessionManager SessionManager
 
-<PageTitle>Index</PageTitle>
+<PageTitle>SocketServer</PageTitle>
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?"/>
+@{
+    foreach (var item in SessionManager.Sessions)
+    {
+        <div>@item.Address</div> 
+    }
+}

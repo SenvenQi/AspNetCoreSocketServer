@@ -2,13 +2,14 @@ using AspNetCoreSocketServer.BlazorServer.Data;
 using SuperSocket;
 using SuperSocket.ProtoBase;
 using System.Text;
+using AspNetCoreSocketServer.SocketService;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddSingleton<ISessionManager,SessionManager>();
 
 builder.Host.AsSuperSocketHostBuilder<TextPackageInfo>()
     .UsePipelineFilter<LinePipelineFilter>()
@@ -17,6 +18,7 @@ builder.Host.AsSuperSocketHostBuilder<TextPackageInfo>()
         // echo message back to client
         await s.SendAsync(Encoding.UTF8.GetBytes(p.Text + "\r\n"));
     })
+    .UseSession<SocketServerAppSession>()
     .UseInProcSessionContainer()
     .AsMinimalApiHostBuilder()
     .ConfigureHostBuilder();
