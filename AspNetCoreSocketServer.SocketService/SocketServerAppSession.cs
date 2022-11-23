@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using Microsoft.AspNetCore.Components;
 using SuperSocket;
 using SuperSocket.Channel;
 using SuperSocket.Server;
@@ -27,6 +28,7 @@ public class SocketServerAppSession:AppSession
 
 public interface ISessionManager
 {
+    Action OnChange { get; set; }
     IList<SessionData> Sessions { get; }
     void Add(EndPoint remoteEndPoint);
     void Remove(EndPoint remoteEndPoint);
@@ -34,6 +36,7 @@ public interface ISessionManager
 
 public class SessionManager : ISessionManager
 {
+    public Action OnChange { get; set; }
     public IList<SessionData> Sessions { get; } = new List<SessionData>(); 
     public void Add(EndPoint remoteEndPoint)
     {
@@ -41,11 +44,13 @@ public class SessionManager : ISessionManager
         {
             Address = remoteEndPoint
         });
+        Dispatcher.CreateDefault().InvokeAsync(OnChange);
     }
 
     public void Remove(EndPoint remoteEndPoint)
     {
         Sessions.Remove(Sessions.First(x => x.Address.Equals(remoteEndPoint)));
+        Dispatcher.CreateDefault().InvokeAsync(OnChange);
     }
 }
 

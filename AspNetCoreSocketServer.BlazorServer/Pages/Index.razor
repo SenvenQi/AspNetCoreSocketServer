@@ -10,3 +10,12 @@
         <div>@item.Address</div> 
     }
 }
+
+@code
+{
+    protected override void OnInitialized()
+    {
+        SessionManager.OnChange += StateHasChanged;
+        base.OnInitialized();
+    }
+}
