@@ -3,11 +3,13 @@ using SuperSocket.ProtoBase;
 using System.Text;
 using AspNetCoreSocketServer.BlazorServer.ViewModel;
 using AspNetCoreSocketServer.SocketService;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddMudServices();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<ISessionManager,SessionManager>();
 builder.Services.AddSingleton<SessionView>();
