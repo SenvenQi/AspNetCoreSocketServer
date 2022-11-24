@@ -6,7 +6,11 @@
     @foreach (var item in ViewModel.SessionDatas)
     {
         <MudItem>
-            <MudPaper Class="d-flex flex-column align-center justify-center border-l-4 pa-4 border-solid mud-border-primary" Square="true">@item.Address.ToString()</MudPaper>
+            <MudPaper Class="pa-2" Outlined="true" Elevation="0">
+                <MudPaper Class="d-flex flex-column align-center justify-center border-l-4 pa-4 border-solid mud-border-primary" 
+                          Square="true">@item.Address.ToString()</MudPaper>
+                <MudText Typo="Typo.h6">ip地址: @item.Ip.ToString()</MudText>
+            </MudPaper>
         </MudItem> 
     }
 </div>
