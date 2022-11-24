@@ -2,7 +2,7 @@
 @using AspNetCoreSocketServer.BlazorServer.ViewModel
 @inherits ReactiveUI.Blazor.ReactiveComponentBase<AspNetCoreSocketServer.BlazorServer.ViewModel.SessionView>
 
-<div class="d-flex flex-grow-1 gap-4">
+<div class="d-flex flex-wrap flex-grow-1 gap-4">
     @foreach (var item in ViewModel.SessionDatas)
     {
         <MudItem>
