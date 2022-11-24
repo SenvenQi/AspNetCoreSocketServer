@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using Microsoft.AspNetCore.Components;
-using SuperSocket;
 using SuperSocket.Channel;
 using SuperSocket.Server;
 
@@ -30,7 +29,7 @@ public interface ISessionManager
 {
     Action OnChange { get; set; }
     List<SessionData> Sessions { get; set; }
-    void Add(EndPoint remoteEndPoint);
+    Task Add(EndPoint remoteEndPoint);
     void Remove(EndPoint remoteEndPoint);
 }
 
@@ -38,18 +37,22 @@ public class SessionManager : ISessionManager
 {
     public Action OnChange { get; set; }
     public List<SessionData> Sessions { get; set; } = new List<SessionData>(); 
-    public void Add(EndPoint remoteEndPoint)
+    public async Task Add(EndPoint remoteEndPoint)
     {
+        using var httpclient = new HttpClient();
+        var result = await httpclient.GetAsync($"http://ip-api.com/json/{remoteEndPoint.ToString()?.Split(":")[0]}");
         Sessions.Add(new SessionData()
         {
-            Address = remoteEndPoint
+            Id = Guid.NewGuid(),
+            Ip = remoteEndPoint,
+            Address = await result.Content.ReadAsStringAsync() 
         });
         Dispatcher.CreateDefault().InvokeAsync(OnChange);
     }
 
     public void Remove(EndPoint remoteEndPoint)
     {
-        Sessions.Remove(Sessions.First(x => x.Address.Equals(remoteEndPoint)));
+        Sessions.Remove(Sessions.First(x => x.Ip.Equals(remoteEndPoint)));
         Dispatcher.CreateDefault().InvokeAsync(OnChange);
     }
 }
@@ -57,6 +60,6 @@ public class SessionManager : ISessionManager
 public class SessionData
 {
     public Guid Id { get; set; }
-    public EndPoint Address { get; set; }
-    public IEnumerable<byte[]> Type { get; set; }
+    public EndPoint Ip{ get; set; }
+    public string Address { get; set; }
 }
