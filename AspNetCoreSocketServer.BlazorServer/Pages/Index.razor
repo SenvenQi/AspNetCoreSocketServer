@@ -1,11 +1,5 @@
 ﻿@page "/"
-@using AspNetCoreSocketServer.SocketService
-@inject ISessionManager SessionManager
 
 <PageTitle>SocketServer</PageTitle>
 
-<ListClient @bind-Data="SessionManager.Sessions"></ListClient>
-
-@code
-{
-}
+<ListClient />

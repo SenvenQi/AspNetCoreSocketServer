@@ -1,25 +1,25 @@
 ﻿@using AspNetCoreSocketServer.SocketService
-@inject ISessionManager SessionManager
-@foreach (var item in Data)
+@using AspNetCoreSocketServer.BlazorServer.ViewModel
+@using System.Reactive.Threading.Tasks
+@inherits ReactiveUI.Blazor.ReactiveComponentBase<SessionView>
+
+@foreach (var item in ViewModel.SessionDatas)
 {
     <div>@item.Address.ToString()</div>
 }
 
 @code {
-    [Parameter]
-    public List<SessionData> Data { get; set; }
-    [Parameter]
-    public EventCallback<List<SessionData>> DataChanged { get; set; }
 
-    protected override void OnInitialized()
+    [Inject]
+    public SessionView SessionView
     {
-        SessionManager.OnChange += Update;
-        base.OnInitialized();
+        get => ViewModel;
+        set => ViewModel = value;
     }
 
-    private async void Update()
+    protected override async Task OnInitializedAsync()
     {
-        await DataChanged.InvokeAsync(SessionManager.Sessions);
+        await ViewModel.LoadSessions.Execute().ToTask();
     }
 
 }

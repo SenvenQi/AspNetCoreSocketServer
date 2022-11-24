@@ -1,7 +1,7 @@
-using AspNetCoreSocketServer.BlazorServer.Data;
 using SuperSocket;
 using SuperSocket.ProtoBase;
 using System.Text;
+using AspNetCoreSocketServer.BlazorServer.ViewModel;
 using AspNetCoreSocketServer.SocketService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<ISessionManager,SessionManager>();
+builder.Services.AddSingleton<SessionView>();
 
 builder.Host.AsSuperSocketHostBuilder<TextPackageInfo>()
     .UsePipelineFilter<LinePipelineFilter>()

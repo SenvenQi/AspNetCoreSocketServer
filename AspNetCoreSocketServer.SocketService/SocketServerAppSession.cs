@@ -8,7 +8,7 @@ namespace AspNetCoreSocketServer.SocketService;
 
 public class SocketServerAppSession:AppSession
 {
-    private ISessionManager _sessionManager;
+    private readonly ISessionManager _sessionManager;
     public SocketServerAppSession(ISessionManager sessionManager)
     {
         _sessionManager = sessionManager;
