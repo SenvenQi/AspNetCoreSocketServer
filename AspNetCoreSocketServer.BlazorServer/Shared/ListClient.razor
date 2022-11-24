@@ -5,7 +5,7 @@
 
 @foreach (var item in ViewModel.SessionDatas)
 {
-    <div>@item.Address.ToString()</div>
+    <MudPaper Class="pa-16 ma-2" Elevation="0">@item.Address.ToString()</MudPaper>
 }
 
 @code {
