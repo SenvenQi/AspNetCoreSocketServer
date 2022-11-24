@@ -1,12 +1,16 @@
-﻿@using AspNetCoreSocketServer.SocketService
+﻿@using System.Reactive.Threading.Tasks
 @using AspNetCoreSocketServer.BlazorServer.ViewModel
-@using System.Reactive.Threading.Tasks
-@inherits ReactiveUI.Blazor.ReactiveComponentBase<SessionView>
+@inherits ReactiveUI.Blazor.ReactiveComponentBase<AspNetCoreSocketServer.BlazorServer.ViewModel.SessionView>
 
-@foreach (var item in ViewModel.SessionDatas)
-{
-    <MudPaper Class="pa-16 ma-2" Elevation="0">@item.Address.ToString()</MudPaper>
-}
+<div class="d-flex flex-grow-1 gap-4">
+    @foreach (var item in ViewModel.SessionDatas)
+    {
+        <MudItem>
+            <MudPaper Class="d-flex flex-column align-center justify-center border-l-4 pa-4 border-solid mud-border-primary" Square="true">@item.Address.ToString()</MudPaper>
+        </MudItem> 
+    }
+</div>
+
 
 @code {
 
