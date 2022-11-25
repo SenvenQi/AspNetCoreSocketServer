@@ -39,14 +39,15 @@ public class SessionManager : ISessionManager
     public List<SessionData> Sessions { get; set; } = new List<SessionData>(); 
     public async Task Add(EndPoint remoteEndPoint)
     {
-        using var httpclient = new HttpClient();
-        var result = await httpclient.GetAsync($"http://ip-api.com/json/{remoteEndPoint.ToString()?.Split(":")[0]}");
-        Sessions.Add(new SessionData()
+        var sessionData = new SessionData()
         {
             Id = Guid.NewGuid(),
             Ip = remoteEndPoint,
-            Address = await result.Content.ReadAsStringAsync() 
-        });
+        };
+        Sessions.Add(sessionData);
+        using var httpclient = new HttpClient();
+        var result = await httpclient.GetAsync($"http://ip-api.com/json/{remoteEndPoint.ToString()?.Split(":")[0]}");
+        sessionData.Address = await result.Content.ReadAsStringAsync(); 
         Dispatcher.CreateDefault().InvokeAsync(OnChange);
     }
 
